@@ -39,6 +39,14 @@ export const auth = betterAuth({
     },
     requireEmailVerification: true
   },
+  user: {
+    additionalFields: {
+      role: {
+        type: ['member', 'admin', 'owner'],
+        input: false
+      }
+    }
+  },
   session: {
     expiresIn: 30 * 24 * 60 * 60, // 30 days - default is 7 days
     cookieCache: {

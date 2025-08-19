@@ -1,9 +1,14 @@
-import { pgTable, text, timestamp, boolean } from 'drizzle-orm/pg-core'
+import { pgTable, text, timestamp, boolean, pgEnum } from 'drizzle-orm/pg-core'
+
+export const role = pgEnum('role', ['member', 'admin', 'owner'])
+
+export type Role = (typeof role.enumValues)[number]
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
+  role: role('role').default('member').notNull(),
   emailVerified: boolean('email_verified')
     .$defaultFn(() => false)
     .notNull(),
@@ -15,6 +20,8 @@ export const user = pgTable('user', {
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull()
 })
+
+export type User = typeof user.$inferSelect
 
 export const session = pgTable('session', {
   id: text('id').primaryKey(),
