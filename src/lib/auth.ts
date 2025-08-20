@@ -5,6 +5,8 @@ import { schema } from '@/db/schema'
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { nextCookies } from 'better-auth/next-js'
+import { admin } from 'better-auth/plugins/admin'
+import { ac, roles } from '@/lib/permissions'
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY as string)
@@ -63,5 +65,13 @@ export const auth = betterAuth({
       // session, user and verification table names already match the database names
     }
   }),
-  plugins: [nextCookies()]
+  plugins: [
+    nextCookies(),
+    admin({
+      defaultRole: 'member',
+      adminRoles: ['admin'],
+      ac,
+      roles
+    })
+  ]
 })

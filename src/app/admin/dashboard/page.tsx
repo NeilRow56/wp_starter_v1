@@ -42,7 +42,7 @@ export default async function AdminDashboardPage() {
         </p>
       </div>
 
-      <div className='w-full overflow-x-auto'>USER TABLE</div>
+      <div className='w-full overflow-x-auto'>Employee Table</div>
     </div>
   )
 }

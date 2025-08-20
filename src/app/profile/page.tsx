@@ -1,5 +1,6 @@
 import { SignOutButton } from '@/components/sign-out-button'
 import { Button } from '@/components/ui/button'
+import { UpdateUserForm } from '@/components/users/update-user-form'
 import { auth } from '@/lib/auth'
 import { ArrowLeftIcon } from 'lucide-react'
 import { headers } from 'next/headers'
@@ -55,7 +56,10 @@ export default async function ProfilePage() {
         </pre>
         <div className='space-y-4 rounded-b-md border border-t-8 border-blue-600 p-4'>
           <h2 className='text-2xl font-bold'>Update User</h2>
-          Update user form
+          <UpdateUserForm
+            name={session.user.name}
+            image={session.user.image ?? ''}
+          />
         </div>
       </div>
       <div>User Role: {role}</div>

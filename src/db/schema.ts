@@ -8,7 +8,7 @@ export const user = pgTable('user', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
-  role: role('role').default('member').notNull(),
+  role: role('role').default('admin').notNull(),
   emailVerified: boolean('email_verified')
     .$defaultFn(() => false)
     .notNull(),
