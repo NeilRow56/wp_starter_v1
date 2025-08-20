@@ -18,7 +18,7 @@ export const GetStartedButton = () => {
     )
   }
 
-  const href = session ? '/dashboard' : '/auth/sign-in'
+  const href = session ? '/admin/dashboard' : '/auth/sign-in'
 
   return (
     <div className='flex flex-col items-center gap-4'>
@@ -29,10 +29,10 @@ export const GetStartedButton = () => {
       {session && (
         <div className='mx-auto flex flex-col space-y-4'>
           <div className='flex items-center gap-6'>
-            {/* <span
-             data-role={session.user.role}
-             className='size-4 animate-pulse rounded-full data-[role=ADMIN]:bg-red-600 data-[role=USER]:bg-blue-600'
-           /> */}
+            <span
+              data-role={session.user.role}
+              className='size-4 animate-pulse rounded-full data-[role=admin]:bg-red-600 data-[role=member]:bg-blue-600 data-[role=owner]:bg-green-600'
+            />
             <p>Welcome back, {session.user.name}! 👋</p>
           </div>
 

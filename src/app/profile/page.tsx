@@ -20,15 +20,16 @@ export default async function ProfilePage() {
     <div className='container mx-auto max-w-screen-lg space-y-8 px-8 py-16'>
       <div className='space-y-4'>
         <Button size='icon' asChild>
-          <Link href='/'>
+          <Link href='/' className='w-[90px] p-1'>
             <ArrowLeftIcon />
+            <span> Home</span>
           </Link>
         </Button>
         <h1 className='text-3xl font-bold'>Profile</h1>
         <div className='flex items-center gap-2'>
           {session.user.role === 'admin' && (
             <Button size='sm' asChild>
-              <Link href='/dashboard'>Admin Dashboard</Link>
+              <Link href='/admin/dashboard'>Admin Dashboard</Link>
             </Button>
           )}
 
