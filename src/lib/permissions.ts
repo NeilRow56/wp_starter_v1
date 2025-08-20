@@ -3,28 +3,21 @@ import { defaultStatements, adminAc } from 'better-auth/plugins/admin/access'
 
 const statements = {
   ...defaultStatements,
-  employees: ['create', 'read', 'update', 'delete', 'update:own', 'delete:own']
+  employees: ['create', 'read', 'update', 'delete']
 } as const
 
 export const ac = createAccessControl(statements)
 
 export const roles = {
   member: ac.newRole({
-    employees: ['create', 'read', 'update:own']
+    employees: ['read']
   }),
   owner: ac.newRole({
-    employees: ['create', 'read', 'update:own']
+    employees: ['read']
   }),
 
   admin: ac.newRole({
-    employees: [
-      'create',
-      'read',
-      'update',
-      // 'delete',
-      'update:own'
-      // 'delete:own'
-    ],
+    employees: ['create', 'read', 'update', 'delete'],
     ...adminAc.statements
   })
 }

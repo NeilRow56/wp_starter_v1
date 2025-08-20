@@ -3,7 +3,7 @@
 import { db } from '@/db'
 import { user } from '@/db/schema'
 import { auth } from '@/lib/auth'
-import { asc, eq } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -80,44 +80,18 @@ export const signUp = async (email: string, password: string, name: string) => {
 
 /* ADMIN QUERIES - THESE QUERIES REQUIRE ADMIN ACCESS */
 
-export async function getUsers() {
-  const session = await auth.api.getSession({
-    headers: await headers()
-  })
-
-  if (!session) redirect('/auth/sign-in')
-
-  try {
-    const allUsers = await db.select().from(user).orderBy(asc(user.name))
-    return allUsers
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
-}
-
-// export async function deleteUser(id: string) {
-//   const headersList = await headers()
-
+// export async function getUsers() {
 //   const session = await auth.api.getSession({
-//     headers: headersList
+//     headers: await headers()
 //   })
 
-//   if (!session) throw new Error('Unauthorized')
-
-//   if (session.user.role !== 'admin' || session.user.id === id) {
-//     throw new Error('Forbidden operation')
-//   }
+//   if (!session) redirect('/auth/sign-in')
 
 //   try {
-//     await db.delete(user).where(and(eq(user.id, id), eq(user.role, 'member')))
+//     const allUsers = await db.select().from(user).orderBy(asc(user.name))
+//     return allUsers
 //   } catch (error) {
 //     console.error(error)
-//     return {
-//       error:
-//         'Failed to delete user. Admin users cannot be deleted. Users cannot delete themselves'
-//     }
+//     throw error
 //   }
-
-//   revalidatePath('/admin/dashboard')
 // }

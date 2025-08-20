@@ -17,6 +17,15 @@ export default async function ProfilePage() {
 
   const role = session.user.role
 
+  const FULL_POST_ACCESS = await auth.api.userHasPermission({
+    body: {
+      userId: session.user.id,
+      permissions: {
+        employees: ['create', 'read', 'update', 'delete']
+      }
+    }
+  })
+
   return (
     <div className='container mx-auto max-w-screen-lg space-y-8 px-8 py-16'>
       <div className='space-y-4'>
@@ -35,6 +44,18 @@ export default async function ProfilePage() {
           )}
 
           <SignOutButton />
+        </div>
+        <h2 className='text-2xl font-bold'>Permissions</h2>
+
+        <div className='space-x-4'>
+          <Button
+            size='sm'
+            asChild
+            disabled={!FULL_POST_ACCESS.success}
+            className='cursor-pointer'
+          >
+            <Link href='/admin/employees'>Manage employees</Link>
+          </Button>
         </div>
 
         {session.user.image ? (
