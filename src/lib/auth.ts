@@ -44,7 +44,7 @@ export const auth = betterAuth({
   user: {
     additionalFields: {
       role: {
-        type: ['member', 'admin', 'owner'],
+        type: ['admin', 'member', 'owner'],
         input: false
       }
     }
@@ -68,10 +68,12 @@ export const auth = betterAuth({
   plugins: [
     nextCookies(),
     admin({
-      defaultRole: 'member',
+      defaultRole: 'admin',
       adminRoles: ['admin'],
       ac,
       roles
     })
   ]
 })
+
+export type ErrorCode = keyof typeof auth.$ERROR_CODES | 'UNKNOWN'

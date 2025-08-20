@@ -13,7 +13,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'avatar.vercel.sh' },
       { protocol: 'https', hostname: 'utfs.io' },
       { protocol: 'https', hostname: 'res.cloudinary.com' },
-      { protocol: 'https', hostname: 'images.pexels.com' }
+      { protocol: 'https', hostname: 'images.pexels.com' },
+      { protocol: 'https', hostname: 'img.exactly.ai' }
     ]
   }
 }

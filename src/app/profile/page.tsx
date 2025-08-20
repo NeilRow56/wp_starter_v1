@@ -1,5 +1,6 @@
 import { SignOutButton } from '@/components/sign-out-button'
 import { Button } from '@/components/ui/button'
+import { ChangePasswordForm } from '@/components/users/change-password-form'
 import { UpdateUserForm } from '@/components/users/update-user-form'
 import { auth } from '@/lib/auth'
 import { ArrowLeftIcon } from 'lucide-react'
@@ -61,6 +62,8 @@ export default async function ProfilePage() {
         {session.user.image ? (
           <Image
             src={session.user.image}
+            width={96}
+            height={96}
             alt='User Image'
             className='border-primary size-24 rounded-md border object-cover'
           />
@@ -81,6 +84,11 @@ export default async function ProfilePage() {
             name={session.user.name}
             image={session.user.image ?? ''}
           />
+        </div>
+        <div className='space-y-4 rounded-b-md border border-t-8 border-red-600 p-4'>
+          <h2 className='text-2xl font-bold'>Change Password</h2>
+
+          <ChangePasswordForm />
         </div>
       </div>
       <div>User Role: {role}</div>
