@@ -1,4 +1,5 @@
 import { ReturnButton } from '@/components/return-button'
+import { UserTable } from '@/components/users/user-table'
 import { auth } from '@/lib/auth'
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -24,7 +25,9 @@ export default async function AdministratorPage() {
             </p>
           </div>
 
-          <div className='w-full overflow-x-auto'>User Table</div>
+          <div className='w-full overflow-x-auto'>
+            <UserTable />
+          </div>
         </div>
       ) : (
         <div className='container mx-auto max-w-screen-lg space-y-8 px-8 py-16'>

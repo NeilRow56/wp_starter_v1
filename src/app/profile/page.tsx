@@ -1,3 +1,4 @@
+import { ReturnButton } from '@/components/return-button'
 import { SignOutButton } from '@/components/sign-out-button'
 import { Button } from '@/components/ui/button'
 import { ChangePasswordForm } from '@/components/users/change-password-form'
@@ -45,7 +46,24 @@ export default async function ProfilePage() {
           )}
 
           <SignOutButton />
+          <div>
+            {session.user.email === 'admin@wpaccpac.org' ? (
+              <div className='px-8'>
+                <div className='space-y-4'>
+                  <ReturnButton
+                    href='/protected'
+                    label='Protected User Information'
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className='container mx-auto max-w-screen-lg space-y-8 px-8 py-16'>
+                <span></span>
+              </div>
+            )}
+          </div>
         </div>
+
         <h2 className='text-2xl font-bold'>Permissions</h2>
 
         <div className='space-x-4'>

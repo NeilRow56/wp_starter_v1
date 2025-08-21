@@ -4,7 +4,8 @@ import { db } from '@/db'
 import { user } from '@/db/schema'
 import { auth } from '@/lib/auth'
 import { APIError } from 'better-auth/api'
-import { eq } from 'drizzle-orm'
+import { asc, eq } from 'drizzle-orm'
+import { revalidatePath } from 'next/cache'
 
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
@@ -81,21 +82,43 @@ export const signUp = async (email: string, password: string, name: string) => {
 
 /* ADMIN QUERIES - THESE QUERIES REQUIRE ADMIN ACCESS */
 
-// export async function getUsers() {
-//   const session = await auth.api.getSession({
-//     headers: await headers()
-//   })
+export async function findAllUsers() {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  })
 
-//   if (!session) redirect('/auth/sign-in')
+  if (!session) redirect('/auth/sign-in')
 
-//   try {
-//     const allUsers = await db.select().from(user).orderBy(asc(user.name))
-//     return allUsers
-//   } catch (error) {
-//     console.error(error)
-//     throw error
-//   }
-// }
+  const allUsers = await db.select().from(user).orderBy(asc(user.name))
+
+  return allUsers
+}
+
+export async function deleteUser(id: string) {
+  const headersList = await headers()
+
+  const session = await auth.api.getSession({
+    headers: headersList
+  })
+
+  if (!session) throw new Error('Unauthorized')
+
+  if (session.user.role !== 'admin' || session.user.id === id) {
+    throw new Error('Forbidden operation')
+  }
+
+  try {
+    await db.delete(user).where(eq(user.id, id))
+  } catch (error) {
+    console.error(error)
+    return {
+      error:
+        'Failed to delete user. Admin users cannot be deleted. Users cannot delete themselves'
+    }
+  }
+
+  revalidatePath('/admin/dashboard')
+}
 export async function changePasswordAction(formData: FormData) {
   const currentPassword = String(formData.get('currentPassword'))
   if (!currentPassword) return { error: 'Please enter your current password' }
